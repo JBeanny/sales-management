@@ -4,9 +4,9 @@ import { TbFileInvoice } from "react-icons/tb";
 import { GiMoneyStack } from "react-icons/gi";
 import { BsCurrencyDollar } from "react-icons/bs";
 import { FcLike } from "react-icons/fc";
-import StatisticCard from "@/components/StatisticCard";
-import LineChart from "@/components/LineChart/LineChart";
+import { LineChart, StatisticCard } from "@/components/Organisms";
 import { MoneyIcon, StockIcon, OutOfStock } from "@/public/SVG";
+import { DataDeserializer } from "@/helper/Deserializer";
 
 const Home = ({ products }) => {
   return (
@@ -84,10 +84,10 @@ const Home = ({ products }) => {
             </tr>
           </thead>
           <tbody>
-            {products.data.map((product, index) => {
+            {products.map((product, index) => {
               return (
                 <tr className="bg-white text-secondary" key={index}>
-                  <td className="px-6 py-4">{product.pid}</td>
+                  <td className="px-6 py-4">{product.id}</td>
                   <td className="px-6 py-4">{product.name}</td>
                   <td className="px-6 py-4">{product.category}</td>
                   <td className="px-6 py-4">៛ {product.price}</td>
@@ -102,13 +102,17 @@ const Home = ({ products }) => {
 };
 
 export async function getServerSideProps(context) {
-  const data = await fetch("http://localhost:8080/api/v1/products", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  const products = await data.json();
+  const data = await fetch(
+    "http://localhost:8080/api/v1/products?page[limit]=3",
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  let products = await DataDeserializer(await data.json());
 
   return {
     props: {

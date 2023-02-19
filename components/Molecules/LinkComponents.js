@@ -5,8 +5,7 @@ import {
   AiOutlineLogout,
 } from "react-icons/ai";
 import { BsBoxSeam, BsPlusCircle } from "react-icons/bs";
-import NavLink from "./Link";
-import Button from "./Button";
+import { NavLink, Button } from "../Atoms";
 
 const LinkComponents = () => {
   return (

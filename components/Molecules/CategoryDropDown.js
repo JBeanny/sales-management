@@ -1,13 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 const Dropdown = ({ title, data = [], value, setValue }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
   const handleDropdown = () => {
     setIsOpen(!isOpen);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isOpen && !dropdownRef.current.contains(event.target)) {
+        handleDropdown();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
   return (
-    <div>
+    <div ref={dropdownRef}>
       <button
         id="dropdownDefaultButton"
         data-dropdown-toggle="dropdown"
@@ -53,7 +68,7 @@ const Dropdown = ({ title, data = [], value, setValue }) => {
                     className="rounded-lg px-4 py-4 text-md font-medium hover:bg-primary hover:text-white text-primary w-full select-none cursor-pointer"
                     onClick={() => {
                       setValue(item.value);
-                      handleDropdown();
+                      handleDropdown(item.value);
                     }}
                   >
                     {item.value}

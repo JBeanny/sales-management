@@ -1,6 +1,6 @@
 import React from "react";
-import LinkComponents from "./LinkComponents";
-import Logo from "./Logo";
+import { LinkComponents } from "../Molecules";
+import { Logo } from "../Atoms";
 
 const Navbar = () => {
   return (

@@ -24,38 +24,6 @@ export const options = {
       text: "ស្ថិតិការលក់ប្រចាំឆ្នាំ",
     },
   },
-  scales: {
-    yAxes: {
-      grid: {
-        display: false,
-        color: "#6d28d9",
-        zeroLineColor: "transparent",
-      },
-      ticks: {
-        padding: 2,
-        backdropPadding: 2,
-        backdropColor: "rgba(255,255,255,1)",
-        color: "#6d28d9",
-        font: {
-          family: "Kantumruy",
-          size: 12,
-        },
-      },
-    },
-    xAxes: {
-      grid: {
-        display: false,
-        zeroLineColor: "transparent",
-      },
-      ticks: {
-        color: "#6d28d9",
-        font: {
-          family: "Kantumruy",
-          size: 12,
-        },
-      },
-    },
-  },
 };
 
 //xAxis

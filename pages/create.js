@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import Image from "next/image";
-import Dropdown from "@/components/Dropdown";
-import { categories } from "@/data/category";
+import { Dropdown } from "@/components/Atoms";
+import { categories, units } from "@/data";
 import { fetchApi } from "@/helper/FetchAPI";
 import { Alert } from "antd";
+import { FormSample } from "@/components/Organisms";
 
 //schema
 const ProductSchema = Yup.object().shape({
@@ -100,15 +101,17 @@ const create = () => {
           {/* dropdown catgegory input */}
           <Dropdown
             title="ប្រភេទនៃការលក់"
-            data={categories}
+            data={units}
             value={unit}
             setValue={setUnit}
+            width="500px"
           />
           <Dropdown
             title="ប្រភេទទំនិញ"
             data={categories}
             value={category}
             setValue={setCategory}
+            width="500px"
           />
 
           <button
@@ -119,25 +122,7 @@ const create = () => {
           </button>
 
           {/* sample data */}
-          <div className="w-[500px] mt-8 p-2 bg-light_primary text-primary flex flex-col gap-4 rounded-lg">
-            <span className="font-bold text-xl">គម្រូទិន្នន័យ</span>
-            <span>
-              ឈ្មោះទំនិញ : <span className="text-secondary">ថង់</span>
-            </span>
-            <span>
-              ឈ្មោះបន្ទាប់បន្សំទំនិញ :{" "}
-              <span className="text-secondary">ថង់-1</span>
-            </span>
-            <span>
-              តម្លៃ : <span className="text-secondary">៛ 10000</span>
-            </span>
-            <span>
-              ប្រភេទនៃការលក់ : <span className="text-secondary">ជាកញ្ចប់</span>
-            </span>
-            <span>
-              ប្រភេទទំនិញ : <span className="text-secondary">ផ្លាស្ទិច</span>
-            </span>
-          </div>
+          <FormSample />
         </Form>
         <div className="relative">
           <Image
