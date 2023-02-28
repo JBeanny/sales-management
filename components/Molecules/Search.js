@@ -10,6 +10,9 @@ const Search = ({ url, setUrl, currLink }) => {
         ? url.split("&search")[0].concat(`&search=${searchTerm}`)
         : url.concat(`&search=${searchTerm}`);
     setUrl(newUrl);
+    if (searchTerm === "") {
+      setUrl(currLink);
+    }
   };
 
   return (

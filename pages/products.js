@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { DataDeserializer } from "@/helper/Deserializer";
 import { Search, PaginationButtons } from "@/components/Molecules";
 import { FilterIcon } from "@/public/SVG";
 import { FilterModal, ProductTable } from "@/components/Organisms";
+import { ExcelDownloadButton } from "@/components/Atoms";
 
 const products = ({ data }) => {
   const [products, setProducts] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const tableRef = useRef(null);
 
   const [url, setUrl] = useState(
     "http://localhost:8080/api/v1/products?page[offset]=1&page[limit]=10"
@@ -26,12 +28,16 @@ const products = ({ data }) => {
   useEffect(() => {
     fetchProducts();
   }, [url]);
+
+  console.log(url);
+
   return (
     <div className="w-[90%] relative h-screen overflow-hidden">
       <div className="pt-4 flex justify-between items-center">
         <div className="text-2xl text-primary font-medium">
           ផលិតផលទាំងអស់: {data.length !== 0 ? data.length : 0}
         </div>
+        <ExcelDownloadButton tableRef={tableRef} data={data} />
         <div className="flex gap-10">
           <div
             className="bg-light_primary rounded-md p-3 border-2 border-transparent cursor-pointer"
@@ -46,7 +52,12 @@ const products = ({ data }) => {
           />
         </div>
       </div>
-      <FilterModal modalOpen={isModalOpen} setModalOpen={setIsModalOpen} />
+      <FilterModal
+        modalOpen={isModalOpen}
+        setModalOpen={setIsModalOpen}
+        setUrl={setUrl}
+        url={url}
+      />
 
       {/* table  */}
       {products.length === 0 ? (
@@ -55,7 +66,7 @@ const products = ({ data }) => {
         </div>
       ) : (
         <>
-          <ProductTable products={products} />
+          <ProductTable products={products} tableRef={tableRef} />
           <PaginationButtons setUrl={setUrl} links={products[0].links} />
         </>
       )}
